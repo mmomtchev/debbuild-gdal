@@ -1,0 +1,40 @@
+FROM sublimino/debian-build-essential
+
+ENV DEBNAME libgeotiff
+# Uncomment to use the official Debian experimental repo
+#ENV DEBUPSTREAM "https://salsa.debian.org/debian-gis-team/libgeotiff.git"
+ENV DEBUPSTREAM "https://git.meteo.guru/libgeotiff.git"
+
+RUN \
+	DEBIAN_FRONTEND=noninteractive \
+		apt-get update && apt-get install -y --no-install-recommends gpg gpg-agent dirmngr curl
+RUN \
+	DEBIAN_FRONTEND=noninteractive \
+		apt-get install -y --no-install-recommends \
+			git \
+			ca-certificates \
+			debhelper \
+			dh-autoreconf \
+			pkg-config \
+			libjpeg-dev \
+			libtiff-dev \
+			zlib1g-dev
+
+#RUN groupadd -g 1000 mmom
+#RUN useradd -u 1000 -g 1000 mmom
+#USER mmom
+#COPY ${DEBNAME} /${DEBNAME}
+
+ENTRYPOINT \
+        echo "deb http://deb.meteo.guru/debian buster main" > /etc/apt/sources.list.d/meteo.guru.list && \
+        DEBIAN_FRONTEND=noninteractive curl http://deb.meteo.guru/velivole-keyring.asc | apt-key add - && \
+        DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y velivole-keyring && \
+        DEBIAN_FRONTEND=noninteractive apt-get install -y libproj-dev=6.2.0-mmom~buster1 && \
+        rm -rf /${DEBNAME} && \
+        git clone ${DEBUPSTREAM} && \
+        tar -C / -zcvf ${DEBNAME}_`head -1 ${DEBNAME}/debian/changelog | cut -f 2 -d "(" | cut -f 1 -d "-"`.orig.tar.gz ${DEBNAME} && \
+        cd /${DEBNAME} && \
+        dpkg-buildpackage -us -uc && \
+        rm -rf /out/* && \
+        mkdir -p /out && \
+        cp /*.deb /out
