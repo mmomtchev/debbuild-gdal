@@ -1,4 +1,4 @@
-FROM sublimino/debian-build-essential
+FROM debian:buster
 
 ENV DEBNAME proj
 # Uncomment to use the official Debian experimental repo
@@ -6,22 +6,28 @@ ENV DEBNAME proj
 ENV DEBUPSTREAM "https://git.meteo.guru/proj.git"
 
 RUN \
-	DEBIAN_FRONTEND=noninteractive \
-		apt-get update && apt-get install -y --no-install-recommends \
-			git \
-			ca-certificates \
-			debhelper \
-			dh-autoreconf \
-			libsqlite3-dev \
-			pkg-config \
-			pkg-kde-tools \
-			sharutils \
-			sqlite3 \
-			xz-utils
-#RUN groupadd -g 1000 mmom
-#RUN useradd -u 1000 -g 1000 mmom
-#USER mmom
-#COPY ${DEBNAME} /${DEBNAME}
+	DEBIAN_FRONTEND=noninteractive apt-get update && \
+	DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+		build-essential \
+		nasm \
+		vim-common \
+		curl \
+		wget \
+		git \
+		docker.io
+
+RUN \
+	DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+		git \
+		ca-certificates \
+		debhelper \
+		dh-autoreconf \
+		libsqlite3-dev \
+		pkg-config \
+		pkg-kde-tools \
+		sharutils \
+		sqlite3 \
+		xz-utils
 
 ENTRYPOINT \
 	rm -rf /${DEBNAME} && \

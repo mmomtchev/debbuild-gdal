@@ -1,74 +1,82 @@
-FROM sublimino/debian-build-essential
+FROM debian:buster
 
 ENV DEBUPSTREAM "https://git.meteo.guru/gdal.git"
 
 RUN \
-	DEBIAN_FRONTEND=noninteractive \
-		apt-get update && apt-get install -y --no-install-recommends gpg gpg-agent dirmngr curl
+	DEBIAN_FRONTEND=noninteractive apt-get update && \
+	DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+		build-essential \
+		nasm \
+		vim-common \
+		curl \
+		wget \
+		git \
+		docker.io && \
+	DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+		gpg gpg-agent dirmngr curl && \ 
+	mkdir -p /usr/share/man/man1 && \
+	DEBIAN_FRONTEND=noninteractive apt-get install -y openjdk-11-jre-headless
+
 RUN \
-	DEBIAN_FRONTEND=noninteractive \
-		mkdir -p /usr/share/man/man1 && apt-get install -y openjdk-11-jre-headless 
-RUN \
-	DEBIAN_FRONTEND=noninteractive \
-		apt-get install -y --no-install-recommends \
-			git \
-			ca-certificates \
-			debhelper \
-			dh-autoreconf \
-			dh-python \
-			d-shlibs \
-			default-jdk-headless \
-			doxygen \
-			graphviz \
-			ant \
-			chrpath \
-			libarmadillo-dev \
-			libcfitsio-dev \
-			libcharls-dev \
-			libcurl4-gnutls-dev \
-			libdap-dev \
-			libdoxygen-filter-perl \
-			libepsilon-dev \
-			libexpat1-dev \
-			libfreexl-dev \
-			libfyba-dev \
-			libgeos-dev \
-			libgif-dev \
-			libhdf4-alt-dev \
-			libjpeg-dev \
-			libjson-c-dev \
-			libkml-dev \
-			liblzma-dev \
-			libmodern-perl-perl \
-			default-libmysqlclient-dev \
-			libnetcdf-dev \
-			libopenjp2-7-dev \
-			libpng-dev \
-			libpoppler-private-dev \
-			libpq-dev \
-			libqhull-dev \
-			libsqlite3-dev \
-			libtiff-dev \
-			liburiparser-dev \
-			libwebp-dev \
-			libxerces-c-dev \
-			libxml2-dev \
-			libzstd-dev \
-			lsb-release \
-			netcdf-bin \
-			patch \
-			python3-all-dev \
-			python3-numpy \
-			python3-distutils \
-			swig \
-			unixodbc-dev \
-			zlib1g-dev \
-			libpcre3-dev \
-			libspatialite-dev \
-			texlive \
-			ghostscript \
-			python3-pip \
-			pkg-config
+	DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+		git \
+		ca-certificates \
+		debhelper \
+		dh-autoreconf \
+		dh-python \
+		d-shlibs \
+		default-jdk-headless \
+		doxygen \
+		graphviz \
+		ant \
+		chrpath \
+		libarmadillo-dev \
+		libcfitsio-dev \
+		libcharls-dev \
+		libcurl4-gnutls-dev \
+		libdap-dev \
+		libdoxygen-filter-perl \
+		libepsilon-dev \
+		libexpat1-dev \
+		libfreexl-dev \
+		libfyba-dev \
+		libgeos-dev \
+		libgif-dev \
+		libhdf4-alt-dev \
+		libjpeg-dev \
+		libjson-c-dev \
+		libkml-dev \
+		liblzma-dev \
+		libmodern-perl-perl \
+		default-libmysqlclient-dev \
+		libnetcdf-dev \
+		libopenjp2-7-dev \
+		libpng-dev \
+		libpoppler-private-dev \
+		libpq-dev \
+		libqhull-dev \
+		libsqlite3-dev \
+		libtiff-dev \
+		liburiparser-dev \
+		libwebp-dev \
+		libxerces-c-dev \
+		libxml2-dev \
+		libzstd-dev \
+		lsb-release \
+		netcdf-bin \
+		patch \
+		python3-all-dev \
+		python3-numpy \
+		python3-distutils \
+		swig \
+		unixodbc-dev \
+		zlib1g-dev \
+		libpcre3-dev \
+		libspatialite-dev \
+		texlive \
+		ghostscript \
+		python3-pip \
+		pkg-config
 
 RUN			pip3 install -U Sphinx sphinx_rtd_theme breathe
 
