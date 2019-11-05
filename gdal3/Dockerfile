@@ -1,6 +1,6 @@
 FROM debian:buster
 
-ENV DEBUPSTREAM "https://git.meteo.guru/gdal.git"
+ENV DEBUPSTREAM "https://git.meteo.guru/gdal.git -b deb-3.0.2"
 
 RUN \
 	DEBIAN_FRONTEND=noninteractive apt-get update && \
@@ -81,8 +81,8 @@ RUN \
 RUN			pip3 install -U Sphinx sphinx_rtd_theme breathe
 
 ENTRYPOINT \
-	echo "deb http://deb.meteo.guru/debian buster main" > /etc/apt/sources.list.d/meteo.guru.list && \
-	curl http://deb.meteo.guru/velivole-keyring.asc | apt-key add - && \
+	echo "deb https://deb.meteo.guru/debian buster main" > /etc/apt/sources.list.d/meteo.guru.list && \
+	curl https://deb.meteo.guru/velivole-keyring.asc | apt-key add - && \
 	DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y velivole-keyring && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y \
 		libproj-dev=6.2.0-mmom~buster1 \

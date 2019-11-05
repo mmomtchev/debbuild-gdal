@@ -30,8 +30,8 @@ RUN \
 		zlib1g-dev
 
 ENTRYPOINT \
-	echo "deb http://deb.meteo.guru/debian buster main" > /etc/apt/sources.list.d/meteo.guru.list && \
-	DEBIAN_FRONTEND=noninteractive curl http://deb.meteo.guru/velivole-keyring.asc | apt-key add - && \
+	echo "deb https://deb.meteo.guru/debian buster main" > /etc/apt/sources.list.d/meteo.guru.list && \
+	DEBIAN_FRONTEND=noninteractive curl https://deb.meteo.guru/velivole-keyring.asc | apt-key add - && \
 	DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y velivole-keyring && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y libproj-dev=6.2.0-mmom~buster1 && \
 	rm -rf /${DEBNAME} && \
