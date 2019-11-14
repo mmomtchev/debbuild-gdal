@@ -1,11 +1,13 @@
 FROM debian:buster
 
 ENV DEBUPSTREAM "https://git.meteo.guru/gdal.git -b deb-3.0.2"
+ENV DEBVERSION buster
 
 RUN \
 	DEBIAN_FRONTEND=noninteractive apt-get update && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 		build-essential \
+		devscripts \
 		nasm \
 		vim-common \
 		curl \
@@ -94,6 +96,7 @@ ENTRYPOINT \
 	tar -C /gdal -zcvf /gdal/gdal_${DEBVERSION}.orig.tar.gz gdal && \
 	cd /gdal/gdal && \
 	export PATH=~/.local/bin:${PATH} && \
+	DEBEMAIL=momtchil@momtchev.com dch -D ${DEBVERSION} -l "~${DEBVERSION}" "build for ${DEBVERSION}" && \
 	dpkg-buildpackage -us -uc && \
 	rm -rf /out/* && \
 	mkdir -p /out && \

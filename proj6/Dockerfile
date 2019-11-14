@@ -4,11 +4,13 @@ ENV DEBNAME proj
 # Uncomment to use the official Debian experimental repo
 #ENV DEBUPSTREAM "https://salsa.debian.org/debian-gis-team/proj.git"
 ENV DEBUPSTREAM "https://git.meteo.guru/proj.git"
+ENV DEBVERSION buster
 
 RUN \
 	DEBIAN_FRONTEND=noninteractive apt-get update && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 		build-essential \
+		devscripts \
 		nasm \
 		vim-common \
 		curl \
@@ -33,5 +35,7 @@ ENTRYPOINT \
 	rm -rf /${DEBNAME} && \
 	git clone ${DEBUPSTREAM} && \
 	tar -C / -zcvf ${DEBNAME}_`head -1 ${DEBNAME}/debian/changelog | cut -f 2 -d "(" | cut -f 1 -d "-"`.orig.tar.gz ${DEBNAME} && \
-	cd /${DEBNAME} ; dpkg-buildpackage -us -uc && \
-	mkdir -p /out ; cp /*.deb /out
+	cd /${DEBNAME} && \
+	DEBEMAIL=momtchil@momtchev.com dch -D ${DEBVERSION} -l "~${DEBVERSION}" "build for ${DEBVERSION}" && \
+	dpkg-buildpackage -us -uc && \
+	mkdir -p /out && cp /*.deb /out
