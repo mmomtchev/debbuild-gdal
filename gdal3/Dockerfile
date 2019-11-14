@@ -1,7 +1,9 @@
-FROM debian:buster
+ARG DEBVERSION=buster
+FROM debian:$DEBVERSION
 
+ARG DEBVERSION=buster
+ENV DEBVERSION $DEBVERSION
 ENV DEBUPSTREAM "https://git.meteo.guru/gdal.git -b deb-3.0.2"
-ENV DEBVERSION buster
 
 RUN \
 	DEBIAN_FRONTEND=noninteractive apt-get update && \
@@ -12,16 +14,15 @@ RUN \
 		vim-common \
 		curl \
 		wget \
-		git \
-		docker.io && \
+		git && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 		gpg gpg-agent dirmngr curl && \ 
 	mkdir -p /usr/share/man/man1 && \
-	DEBIAN_FRONTEND=noninteractive apt-get install -y openjdk-11-jre-headless
+	DEBIAN_FRONTEND=noninteractive apt-get install -y default-jre-headless
 
 RUN \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-		git \
+		apt-transport-https \
 		ca-certificates \
 		debhelper \
 		dh-autoreconf \
@@ -37,7 +38,6 @@ RUN \
 		libcharls-dev \
 		libcurl4-gnutls-dev \
 		libdap-dev \
-		libdoxygen-filter-perl \
 		libepsilon-dev \
 		libexpat1-dev \
 		libfreexl-dev \
@@ -69,7 +69,6 @@ RUN \
 		patch \
 		python3-all-dev \
 		python3-numpy \
-		python3-distutils \
 		swig \
 		unixodbc-dev \
 		zlib1g-dev \
@@ -80,24 +79,35 @@ RUN \
 		python3-pip \
 		pkg-config
 
-RUN			pip3 install -U Sphinx sphinx_rtd_theme breathe
+RUN	if [ "$DEBVERSION" = "buster" ]; then \
+		DEBIAN_FRONTEND=noninteractive apt-get install -y \
+			libdoxygen-filter-perl \
+			python3-distutils; \
+	fi
+
+RUN	if [ "$DEBVERSION" = "stretch" ]; then \
+		DEBIAN_FRONTEND=noninteractive apt-get install -y \
+			python3-distutils-extra; \
+	fi
+
+RUN	pip3 install -U Sphinx sphinx_rtd_theme breathe
 
 ENTRYPOINT \
-	echo "deb https://deb.meteo.guru/debian buster main" > /etc/apt/sources.list.d/meteo.guru.list && \
+	echo "deb https://deb.meteo.guru/debian ${DEBVERSION} main" > /etc/apt/sources.list.d/meteo.guru.list && \
 	curl https://deb.meteo.guru/velivole-keyring.asc | apt-key add - && \
 	DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y velivole-keyring && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y \
-		libproj-dev=6.2.0-mmom~buster1 \
-		libgeotiff-dev=1.5.1-mmom1~buster \
-		libogdi-dev=4.1.0+ds-mmom1~buster && \
+		libproj-dev \
+		libgeotiff-dev \
+		libogdi-dev && \
 	rm -rf /gdal && \
 	git clone ${DEBUPSTREAM} && \
-	export DEBVERSION=`head -1 /gdal/gdal/debian/changelog | cut -f 2 -d "(" | cut -f 1 -d "-"` && \
-	tar -C /gdal -zcvf /gdal/gdal_${DEBVERSION}.orig.tar.gz gdal && \
+	export GDALVERSION=`head -1 /gdal/gdal/debian/changelog | cut -f 2 -d "(" | cut -f 1 -d "-"` && \
+	tar -C /gdal -zcvf /gdal/gdal_${GDALVERSION}.orig.tar.gz gdal && \
 	cd /gdal/gdal && \
 	export PATH=~/.local/bin:${PATH} && \
 	DEBEMAIL=momtchil@momtchev.com dch -D ${DEBVERSION} -l "~${DEBVERSION}" "build for ${DEBVERSION}" && \
-	dpkg-buildpackage -us -uc && \
+	dpkg-buildpackage -d -us -uc && \
 	rm -rf /out/* && \
 	mkdir -p /out && \
 	cp /gdal/*.deb /out

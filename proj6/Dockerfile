@@ -1,10 +1,12 @@
-FROM debian:buster
+ARG DEBVERSION=buster
+FROM debian:$DEBVERSION
 
+ARG DEBVERSION=buster
 ENV DEBNAME proj
 # Uncomment to use the official Debian experimental repo
 #ENV DEBUPSTREAM "https://salsa.debian.org/debian-gis-team/proj.git"
 ENV DEBUPSTREAM "https://git.meteo.guru/proj.git"
-ENV DEBVERSION buster
+ENV DEBVERSION ${DEBVERSION}
 
 RUN \
 	DEBIAN_FRONTEND=noninteractive apt-get update && \
@@ -15,12 +17,10 @@ RUN \
 		vim-common \
 		curl \
 		wget \
-		git \
-		docker.io
+		git
 
 RUN \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-		git \
 		ca-certificates \
 		debhelper \
 		dh-autoreconf \
