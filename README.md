@@ -1,4 +1,4 @@
-# Debian 10 packages for GDAL 3.0.2
+# Debian 9 (stretch) and 10 (buster) packages for GDAL 3.0.2
 
 **including proj6, ogdi4 and libgeotiff5, all based on the official packages by the Debian GIS team from sid**
 
@@ -17,6 +17,8 @@ Add the GPG key
 Add the repository
 
 `sudo echo "deb https://deb.meteo.guru/debian buster main" > /etc/apt/sources.list.d/meteo.guru.list`
+or
+`sudo echo "deb https://deb.meteo.guru/debian stretch main" > /etc/apt/sources.list.d/meteo.guru.list`
 
 Install the keyring
 
