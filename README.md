@@ -9,6 +9,7 @@ You can use the Dockerfiles to rebuild the packages yourself.
 Or you can use the public repository at
 
 ***deb https://deb.meteo.guru/debian buster main***
+***deb https://deb.meteo.guru/debian stretch main***
 
 Add the GPG key
 
@@ -17,7 +18,9 @@ Add the GPG key
 Add the repository
 
 `sudo echo "deb https://deb.meteo.guru/debian buster main" > /etc/apt/sources.list.d/meteo.guru.list`
+
 or
+
 `sudo echo "deb https://deb.meteo.guru/debian stretch main" > /etc/apt/sources.list.d/meteo.guru.list`
 
 Install the keyring
