@@ -1,4 +1,4 @@
-# Debian 9 (stretch) and 10 (buster) packages for GDAL 3.0.2
+# Debian 9 (stretch), 10 (buster) and Ubuntu 19.04 (disco dingo) packages for GDAL 3.0.2
 
 **including proj6, ogdi4 and libgeotiff5, all based on the official packages by the Debian GIS team from sid**
 
@@ -12,6 +12,8 @@ Or you can use the public repository at
 
 ***deb https://deb.meteo.guru/debian stretch main***
 
+***deb https://deb.meteo.guru/ubuntu disco main***
+
 Add the GPG key
 
 `curl https://deb.meteo.guru/velivole-keyring.asc | sudo apt-key add -`
@@ -23,6 +25,10 @@ Add the repository
 or
 
 `sudo echo "deb https://deb.meteo.guru/debian stretch main" > /etc/apt/sources.list.d/meteo.guru.list`
+
+or
+
+`sudo echo "deb https://deb.meteo.guru/ubuntu disco main" > /etc/apt/sources.list.d/meteo.guru.list`
 
 Install the keyring
 

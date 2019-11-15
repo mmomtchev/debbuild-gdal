@@ -1,6 +1,8 @@
+ARG DISTNAME=debian
 ARG DEBVERSION=buster
-FROM debian:$DEBVERSION
+FROM $DISTNAME:$DEBVERSION
 
+ARG DISTNAME=debian
 ARG DEBVERSION=buster
 ENV DEBVERSION $DEBVERSION
 ENV DEBUPSTREAM "https://git.meteo.guru/gdal.git -b deb-3.0.2"
@@ -79,7 +81,7 @@ RUN \
 		python3-pip \
 		pkg-config
 
-RUN	if [ "$DEBVERSION" = "buster" ]; then \
+RUN	if [ "$DEBVERSION" = "buster" -o "$DEBVERSION" = "disco" ]; then \
 		DEBIAN_FRONTEND=noninteractive apt-get install -y \
 			libdoxygen-filter-perl \
 			python3-distutils; \

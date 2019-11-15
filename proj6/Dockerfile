@@ -1,6 +1,8 @@
+ARG DISTNAME=debian
 ARG DEBVERSION=buster
-FROM debian:$DEBVERSION
+FROM $DISTNAME:$DEBVERSION
 
+ARG DISTNAME=debian
 ARG DEBVERSION=buster
 ENV DEBNAME proj
 # Uncomment to use the official Debian experimental repo
