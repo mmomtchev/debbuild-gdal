@@ -10,7 +10,7 @@ if [ -z "$PKG" -o -z "$DEB" ]; then
 	exit 1
 fi
 
-[ -x ${OUT}/${DEB} ] && rm -rf ${OUT}/${DEB}
+[ ! -z "${OUT}" -a -x ${OUT}/${DEB} ] && rm -rf ${OUT}/${DEB}
 mkdir -p ${OUT}/${DEB}
 echo -- "BUILDING $PKG"
 docker build -t debbuild-${PKG}:${DEB} --build-arg DEBVERSION=$DEB ${PKG} && \
