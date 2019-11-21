@@ -1,6 +1,6 @@
 # Debian 9 (stretch), 10 (buster) and Ubuntu 19.04 (disco dingo) packages for GDAL 3.0.2
 
-**including proj6, ogdi4 and libgeotiff5, all based on the official packages by the Debian GIS team from sid**
+**including proj6, ogdi4, libgeotiff5 and spatialite 4, all based on the official packages by the Debian GIS team from sid**
 
 They have different names from the base packages, so installing the runtime only of proj6 and gdal26 along proj4 and gdal24 should be possible. The -dev packages are mutually exclusive. 
 
