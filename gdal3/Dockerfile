@@ -66,6 +66,7 @@ RUN \
 		libxerces-c-dev \
 		libxml2-dev \
 		libzstd-dev \
+		libssl-dev \
 		lsb-release \
 		netcdf-bin \
 		patch \
@@ -81,7 +82,7 @@ RUN \
 		python3-pip \
 		pkg-config
 
-RUN	if [ "$DEBVERSION" = "buster" -o "$DEBVERSION" = "disco" ]; then \
+RUN	if [ "$DEBVERSION" = "buster" -o "$DEBVERSION" = "disco" -o "$DEBVERSION" = "eoan" ]; then \
 		DEBIAN_FRONTEND=noninteractive apt-get install -y \
 			libdoxygen-filter-perl \
 			python3-distutils; \
