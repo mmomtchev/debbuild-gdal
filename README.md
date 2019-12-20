@@ -36,13 +36,13 @@ or
 
 `sudo echo "deb [arch=amd64] https://deb.meteo.guru/ubuntu eoan main" > /etc/apt/sources.list.d/meteo.guru.list`
 
-Install the keyring
+Update and install the keyring
 
-`sudo apt-get install -y velivole-keyring`
+`sudo apt-get update && sudo apt-get install -y velivole-keyring`
 
-Update and install
+Install GDAL which will pull the rest
 
-`sudo apt-get update && apt-get install -y gdal-bin`
+`sudo apt-get install -y gdal-bin`
 
 Sources used for building can be browsed at https://git.meteo.guru/
 
