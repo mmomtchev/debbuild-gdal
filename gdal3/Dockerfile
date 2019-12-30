@@ -5,7 +5,7 @@ FROM $DISTNAME:$DEBVERSION
 ARG DISTNAME=debian
 ARG DEBVERSION=buster
 ENV DEBVERSION $DEBVERSION
-ENV DEBUPSTREAM "https://git.meteo.guru/gdal.git -b deb-3.0.2"
+ENV DEBUPSTREAM "https://git.meteo.guru/gdal.git -b debbuild/3.0"
 
 RUN \
 	DEBIAN_FRONTEND=noninteractive apt-get update && \
@@ -109,7 +109,7 @@ ENTRYPOINT \
 	tar -C /gdal -zcvf /gdal/gdal_${GDALVERSION}.orig.tar.gz gdal && \
 	cd /gdal/gdal && \
 	export PATH=~/.local/bin:${PATH} && \
-	DEBEMAIL=momtchil@momtchev.com dch -D ${DEBVERSION} -l "~${DEBVERSION}" "build for ${DEBVERSION}" && \
+	DEBFULLNAME="Momtchil Momtchev" DEBEMAIL=momtchil@momtchev.com dch -D ${DEBVERSION} -l "~${DEBVERSION}" "build for ${DEBVERSION}" && \
 	dpkg-buildpackage -d -us -uc && \
 	rm -rf /out/* && \
 	mkdir -p /out && \
