@@ -80,7 +80,8 @@ RUN \
 		texlive \
 		ghostscript \
 		python3-pip \
-		pkg-config
+		pkg-config \
+		man-db
 
 RUN	if [ "$DEBVERSION" = "buster" -o "$DEBVERSION" = "disco" -o "$DEBVERSION" = "eoan" ]; then \
 		DEBIAN_FRONTEND=noninteractive apt-get install -y \
