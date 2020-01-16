@@ -1,4 +1,4 @@
-# Debian 9 (stretch), 10 (buster), Ubuntu 19.04 (disco dingo) and 19.10 (eoan ermine) packages for GDAL 3.0.2
+# Debian 9 (stretch), 10 (buster), Ubuntu 19.04 (disco dingo) and 19.10 (eoan ermine) packages for GDAL 3.0.3
 
 **including proj6, ogdi4, libgeotiff5 and spatialite 4, all based on the official packages by the Debian GIS team from sid**
 
