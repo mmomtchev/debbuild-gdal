@@ -5,7 +5,7 @@ FROM $DISTNAME:$DEBVERSION
 ARG DISTNAME=debian
 ARG DEBVERSION=buster
 ENV DEBVERSION $DEBVERSION
-ENV DEBUPSTREAM "https://git.meteo.guru/gdal.git -b debbuild/3.0"
+ENV DEBUPSTREAM "https://git.meteo.guru/gdal.git -b deb-3.0.3"
 
 RUN \
 	DEBIAN_FRONTEND=noninteractive apt-get update && \
