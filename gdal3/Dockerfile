@@ -96,6 +96,10 @@ RUN	if [ "$DEBVERSION" = "stretch" ]; then \
 
 RUN	pip3 install -U Sphinx sphinx_rtd_theme breathe
 
+RUN	if [ "$DISTNAME" = "ubuntu" ]; then \
+		/bin/echo -e "y\ny\n" | unminimize; \
+	fi
+
 ENTRYPOINT \
 	echo "deb https://deb.meteo.guru/debian ${DEBVERSION} main" > /etc/apt/sources.list.d/meteo.guru.list && \
 	curl https://deb.meteo.guru/velivole-keyring.asc | apt-key add - && \
