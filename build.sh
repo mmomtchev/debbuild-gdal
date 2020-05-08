@@ -19,4 +19,4 @@ docker build -t debbuild-${PKG}:${DEB} --build-arg DISTNAME=${DIST} --build-arg 
 docker run -v ${OUT}/${DEB}:/out debbuild-${PKG}:${DEB} || exit 2
 echo -- "--------------- DONE"
 scp ${OUT}/${DEB}/*deb debrepo@deb.meteo.guru:www/debian/incoming
-ssh debrepo@deb.meteo.guru "cd www/debian && reprepro includedeb ${DEB} incoming/*${DEB}*deb"
+ssh debrepo@deb.meteo.guru "cd www/debian && reprepro includedeb ${DEB} incoming/*${DEB}*deb && reprepro export && rm incoming/*${DEB}*deb"
