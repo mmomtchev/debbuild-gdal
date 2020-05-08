@@ -5,7 +5,7 @@ FROM $DISTNAME:$DEBVERSION
 ARG DISTNAME=debian
 ARG DEBVERSION=buster
 ENV DEBVERSION $DEBVERSION
-ENV DEBUPSTREAM "https://git.meteo.guru/gdal.git -b deb-3.0.3"
+ENV DEBUPSTREAM "https://git.meteo.guru/gdal.git -b debbuild/3.1.0"
 
 RUN \
 	DEBIAN_FRONTEND=noninteractive apt-get update && \
@@ -81,7 +81,8 @@ RUN \
 		ghostscript \
 		python3-pip \
 		pkg-config \
-		man-db
+		man-db \
+		bash-completion
 
 RUN	if [ "$DEBVERSION" = "buster" -o "$DEBVERSION" = "disco" -o "$DEBVERSION" = "eoan" ]; then \
 		DEBIAN_FRONTEND=noninteractive apt-get install -y \
