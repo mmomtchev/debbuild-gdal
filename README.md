@@ -1,4 +1,4 @@
-# Debian 9 (stretch), 10 (buster), Ubuntu 19.04 (disco dingo), 19.10 (eoan ermine), 20.04 LTS (focal fossa) packages for GDAL 3.1.0
+# Debian 9 (stretch), 10 (buster), Ubuntu 19.04 (disco dingo), 19.10 (eoan ermine), 20.04 LTS (focal fossa) packages for GDAL 3.2
 
 **including proj6, ogdi4, libgeotiff5 and spatialite 4, all based on a merge between GDAL git sources and the official packages by the Debian GIS team from sid**
 
@@ -16,7 +16,7 @@ Or you can use the public repository at
 
 ***deb https://deb.meteo.guru/ubuntu eoan main***
 
-***deb https://deb.meteo.guru/ubuntu focal main*** (only GDAL 3.1.0 as all the other packages are already up to date)
+***deb https://deb.meteo.guru/ubuntu focal main*** (only GDAL 3.2 as all the other packages are already up to date)
 
 Add the GPG key
 
